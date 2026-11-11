@@ -18,3 +18,8 @@ def divide(a: int | float, b: int | float) -> float:
         raise ZeroDivisionError("Cannot divide by zero.")
 
     return a / b
+
+
+def power(base: int | float, exponent: int) -> int | float:
+    """Return the base raised to the given integer exponent."""
+    return base**exponent
