@@ -1,24 +1,40 @@
 # Simple Calculator
 
-Een eenvoudige calculator in Python met losse, goed testbare functies voor:
+Een eenvoudige Python-calculator voor beginners. Het project gebruikt losse
+functies, zodat elke berekening onafhankelijk kan worden gebruikt en getest.
 
-- optellen;
-- aftrekken;
-- vermenigvuldigen;
-- delen.
+## Functies
 
-De calculator heeft op dit moment geen command-line-interface. Je gebruikt de
-functies rechtstreeks vanuit Python-code.
+De calculator ondersteunt:
+
+- optellen met `add`;
+- aftrekken met `subtract`;
+- vermenigvuldigen met `multiply`;
+- delen met `divide`.
+
+De calculator heeft nog geen command-line-interface. Je gebruikt de functies
+rechtstreeks vanuit Python-code.
 
 ## Vereisten
 
 - Python 3.10 of nieuwer
+- `pip`, de pakketbeheerder van Python
 
-Python 3.10 is nodig omdat het project type hints gebruikt zoals `int | float`.
+Python 3.10 of nieuwer is nodig voor type hints zoals `int | float`.
 
 ## Installatie
 
-Maak vanuit de projectmap een virtuele omgeving aan:
+Open een terminal en ga naar de projectmap:
+
+```bash
+cd /pad/naar/copilot-leerpad
+```
+
+Vervang `/pad/naar/copilot-leerpad` door het echte pad naar deze repository.
+
+### macOS/Linux
+
+Maak een virtuele omgeving aan:
 
 ```bash
 python3 -m venv .venv
@@ -26,25 +42,43 @@ python3 -m venv .venv
 
 Activeer de virtuele omgeving:
 
-**macOS/Linux**
-
 ```bash
 source .venv/bin/activate
 ```
 
-**Windows**
+### Windows
+
+Maak een virtuele omgeving aan:
+
+```powershell
+py -3 -m venv .venv
+```
+
+Activeer de virtuele omgeving in PowerShell:
 
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
-Installeer daarna de ontwikkelafhankelijkheden:
+Gebruik je de klassieke Windows-opdrachtprompt (`cmd.exe`), activeer dan met:
+
+```bat
+.venv\Scripts\activate.bat
+```
+
+## Dependencies installeren
+
+Installeer de ontwikkelafhankelijkheden vanuit de geactiveerde virtuele
+omgeving:
 
 ```bash
 python -m pip install -r requirements-dev.txt
 ```
 
-## Gebruik
+De productiecode heeft geen externe dependencies. `requirements-dev.txt`
+bevat pytest en de pakketten die pytest nodig heeft om de tests uit te voeren.
+
+## Calculator gebruiken
 
 Importeer de functies uit `calculator.py`:
 
@@ -57,16 +91,58 @@ multiply(4, 3)     # 12
 divide(12, 3)      # 4.0
 ```
 
-De functies ondersteunen gehele getallen en kommagetallen. Delen door nul
-geeft een `ZeroDivisionError`.
+De functies werken met gehele getallen en kommagetallen:
+
+```python
+add(2, 0.5)        # 2.5
+divide(5, 2.0)     # 2.5
+```
+
+## Foutafhandeling
+
+Delen door nul is niet toegestaan. `divide` geeft in dat geval een
+`ZeroDivisionError`:
+
+```python
+from calculator import divide
+
+divide(10, 0)  # raises ZeroDivisionError
+```
+
+De functies verwachten numerieke invoer. Invoercontrole voor andere types is
+geen onderdeel van dit eenvoudige project.
 
 ## Tests uitvoeren
 
-Voer de tests uit vanuit de projectmap:
+Voer de tests uit vanuit de projectmap, met de virtuele omgeving geactiveerd:
 
 ```bash
 python -m pytest -q
 ```
 
-De tests staan in `tests/test_calculator.py` en controleren normale berekeningen,
-negatieve getallen, nul, floating-point resultaten en delen door nul.
+De tests staan in `tests/test_calculator.py` en controleren onder andere:
+
+- positieve en negatieve getallen;
+- nul;
+- gehele getallen en kommagetallen;
+- gemengde numerieke invoer;
+- floating-point-resultaten;
+- delen door nul.
+
+Als je klaar bent, kun je de virtuele omgeving verlaten met:
+
+```bash
+deactivate
+```
+
+## Projectstructuur
+
+```text
+copilot-leerpad/
+├── calculator.py              # Calculatorfuncties
+├── tests/
+│   └── test_calculator.py     # Geautomatiseerde pytest-tests
+├── requirements-dev.txt       # Ontwikkelafhankelijkheden
+├── README.md                  # Projectdocumentatie
+└── .gitignore                 # Bestanden die Git moet negeren
+```

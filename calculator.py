@@ -13,9 +13,8 @@ def multiply(first: int | float, second: int | float) -> int | float:
     return first * second
 
 
-def divide(first: int | float, second: int | float) -> float:
-    """Return the result of dividing the first number by the second."""
-    if second == 0:
+def divide(a: int | float, b: int | float) -> float:
+    if b == 0:
         raise ZeroDivisionError("Cannot divide by zero.")
 
-    return first / second
+    return a / b
