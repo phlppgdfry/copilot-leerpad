@@ -4,6 +4,15 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def classify_number(value: int | float) -> str:
+    """Return whether a number is positive, negative, or zero."""
+    if value > 0:
+        return "positive"
+    if value < 0:
+        return "negative"
+    return "zero"
+
+
 def add(first: int | float, second: int | float) -> int | float:
     """Return the sum of two numbers."""
     return first + second
