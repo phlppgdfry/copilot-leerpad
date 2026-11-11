@@ -1,3 +1,5 @@
+import logging
+
 import pytest
 
 from calculator import add, divide, multiply, percentage, power, subtract
@@ -64,10 +66,40 @@ def test_divide_returns_quotient(first, second, expected):
     assert divide(first, second) == pytest.approx(expected)
 
 
+def test_divide_logs_success(caplog):
+    """Verify that a successful division is logged at debug level."""
+    with caplog.at_level("DEBUG"):
+        divide(10, 2)
+
+    records = [
+        record
+        for record in caplog.records
+        if record.getMessage() == "Division completed successfully."
+    ]
+
+    assert len(records) == 1
+    assert records[0].levelno == logging.DEBUG
+
+
 def test_divide_by_zero_raises_zero_division_error():
     """Verify that division by zero raises the expected exception."""
     with pytest.raises(ZeroDivisionError):
         divide(10, 0)
+
+
+def test_divide_by_zero_logs_error(caplog):
+    """Verify that division by zero is logged as an error."""
+    with caplog.at_level("ERROR"), pytest.raises(ZeroDivisionError):
+        divide(10, 0)
+
+    records = [
+        record
+        for record in caplog.records
+        if record.getMessage() == "Division by zero attempted."
+    ]
+
+    assert len(records) == 1
+    assert records[0].levelno == logging.ERROR
 
 
 @pytest.mark.parametrize(
