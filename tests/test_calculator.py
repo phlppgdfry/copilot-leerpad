@@ -2,7 +2,31 @@ import logging
 
 import pytest
 
-from calculator import add, divide, multiply, percentage, power, subtract
+from calculator import (
+    add,
+    classify_number,
+    divide,
+    multiply,
+    percentage,
+    power,
+    subtract,
+)
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (5, "positive"),
+        (2.5, "positive"),
+        (-5, "negative"),
+        (-2.5, "negative"),
+        (0, "zero"),
+        (0.0, "zero"),
+    ],
+)
+def test_classify_number_returns_expected_category(value, expected):
+    """Verify classification of positive, negative, and zero values."""
+    assert classify_number(value) == expected
 
 
 @pytest.mark.parametrize(
