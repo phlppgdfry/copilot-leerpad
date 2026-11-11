@@ -10,6 +10,7 @@ from calculator import add, divide, multiply, subtract
         (-2, -3, -5),
         (0, 7, 7),
         (0.1, 0.2, 0.3),
+        (2, 0.5, 2.5),
     ],
 )
 def test_add_returns_sum(first, second, expected):
@@ -25,6 +26,8 @@ def test_add_returns_sum(first, second, expected):
         (8, 3, 5),
         (3, 8, -5),
         (0, 4, -4),
+        (5.5, 2, 3.5),
+        (0.3, 0.1, 0.2),
     ],
 )
 def test_subtract_returns_difference(first, second, expected):
@@ -38,6 +41,7 @@ def test_subtract_returns_difference(first, second, expected):
         (4, 3, 12),
         (-4, 3, -12),
         (9, 0, 0),
+        (2.5, 4, 10),
     ],
 )
 def test_multiply_returns_product(first, second, expected):
@@ -51,6 +55,8 @@ def test_multiply_returns_product(first, second, expected):
         (12, 3, 4),
         (-12, 3, -4),
         (1, 4, 0.25),
+        (5, 2.0, 2.5),
+        (0, 5, 0),
     ],
 )
 def test_divide_returns_quotient(first, second, expected):
