@@ -11,16 +11,19 @@ De calculator ondersteunt:
 - aftrekken met `subtract`;
 - vermenigvuldigen met `multiply`;
 - delen met `divide`.
+- machtsverheffen met `power`;
+- percentages berekenen met `percentage`.
 
 De calculator heeft nog geen command-line-interface. Je gebruikt de functies
 rechtstreeks vanuit Python-code.
 
 ## Vereisten
 
-- Python 3.10 of nieuwer
+- Python 3.11 of nieuwer
 - `pip`, de pakketbeheerder van Python
 
-Python 3.10 of nieuwer is nodig voor type hints zoals `int | float`.
+Python 3.11 of nieuwer is nodig voor de ondersteunde projectomgeving en type
+hints zoals `int | float`.
 
 ## Installatie
 
@@ -83,12 +86,14 @@ bevat pytest en de pakketten die pytest nodig heeft om de tests uit te voeren.
 Importeer de functies uit `calculator.py`:
 
 ```python
-from calculator import add, divide, multiply, subtract
+from calculator import add, divide, multiply, percentage, power, subtract
 
 add(2, 3)          # 5
 subtract(8, 3)     # 5
 multiply(4, 3)     # 12
 divide(12, 3)      # 4.0
+power(2, 3)        # 8
+percentage(25, 200)  # 12.5
 ```
 
 De functies werken met gehele getallen en kommagetallen:
@@ -96,17 +101,19 @@ De functies werken met gehele getallen en kommagetallen:
 ```python
 add(2, 0.5)        # 2.5
 divide(5, 2.0)     # 2.5
+percentage(12.5, 50)  # 25.0
 ```
 
 ## Foutafhandeling
 
-Delen door nul is niet toegestaan. `divide` geeft in dat geval een
-`ZeroDivisionError`:
+Delen door nul is niet toegestaan. `divide` en `percentage` geven in dat geval
+een `ZeroDivisionError`:
 
 ```python
 from calculator import divide
 
 divide(10, 0)  # raises ZeroDivisionError
+percentage(10, 0)  # raises ZeroDivisionError
 ```
 
 De functies verwachten numerieke invoer. Invoercontrole voor andere types is
@@ -117,7 +124,7 @@ geen onderdeel van dit eenvoudige project.
 Voer de tests uit vanuit de projectmap, met de virtuele omgeving geactiveerd:
 
 ```bash
-python -m pytest -q
+python -m pytest -v
 ```
 
 De tests staan in `tests/test_calculator.py` en controleren onder andere:
@@ -127,7 +134,8 @@ De tests staan in `tests/test_calculator.py` en controleren onder andere:
 - gehele getallen en kommagetallen;
 - gemengde numerieke invoer;
 - floating-point-resultaten;
-- delen door nul.
+- delen door nul;
+- machtsverheffen en percentages.
 
 Als je klaar bent, kun je de virtuele omgeving verlaten met:
 
