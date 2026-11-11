@@ -1,3 +1,9 @@
+import logging
+
+
+logger = logging.getLogger(__name__)
+
+
 def add(first: int | float, second: int | float) -> int | float:
     """Return the sum of two numbers."""
     return first + second
@@ -15,8 +21,10 @@ def multiply(first: int | float, second: int | float) -> int | float:
 
 def divide(a: int | float, b: int | float) -> float:
     if b == 0:
+        logger.error("Division by zero attempted.")
         raise ZeroDivisionError("Cannot divide by zero.")
 
+    logger.debug("Division completed successfully.")
     return a / b
 
 
