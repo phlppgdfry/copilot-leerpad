@@ -1,6 +1,6 @@
 import pytest
 
-from calculator import add, divide, multiply, power, subtract
+from calculator import add, divide, multiply, percentage, power, subtract
 
 
 @pytest.mark.parametrize(
@@ -89,3 +89,25 @@ def test_power_zero_to_negative_exponent_raises_zero_division_error():
     """Verify that zero raised to a negative exponent raises an error."""
     with pytest.raises(ZeroDivisionError):
         power(0, -1)
+
+
+@pytest.mark.parametrize(
+    ("value", "total", "expected"),
+    [
+        (25, 200, 12.5),
+        (50, 100, 50.0),
+        (0, 100, 0.0),
+        (-25, 100, -25.0),
+        (12.5, 50, 25.0),
+        (1, 2.0, 50.0),
+    ],
+)
+def test_percentage_returns_percentage(value, total, expected):
+    """Verify percentage calculations with integer and float inputs."""
+    assert percentage(value, total) == pytest.approx(expected)
+
+
+def test_percentage_with_zero_total_raises_zero_division_error():
+    """Verify that a zero total raises the expected exception."""
+    with pytest.raises(ZeroDivisionError):
+        percentage(10, 0)

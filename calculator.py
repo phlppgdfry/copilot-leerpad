@@ -23,3 +23,11 @@ def divide(a: int | float, b: int | float) -> float:
 def power(base: int | float, exponent: int) -> int | float:
     """Return the base raised to the given integer exponent."""
     return base**exponent
+
+
+def percentage(value: int | float, total: int | float) -> float:
+    """Return value as a percentage of total."""
+    if total == 0:
+        raise ZeroDivisionError("Cannot calculate a percentage of zero.")
+
+    return (value / total) * 100
