@@ -1,0 +1,53 @@
+{
+  "task_id": "LESSON12-PILOT-001",
+  "objective": "Improve percentage regression coverage without changing calculator functionality.",
+  "scope": {
+    "in_scope": [
+      "Percentage API and CLI regression tests",
+      "Agent workflow evidence and validation"
+    ],
+    "out_of_scope": [
+      "calculator.py and calculator_cli.py production changes",
+      "New runtime dependencies",
+      "Commit, push, merge, or release"
+    ]
+  },
+  "acceptance_criteria": [
+    "New tests cover justified percentage boundaries without duplication.",
+    "The complete pytest suite passes.",
+    "All workflow evidence is preserved in docs/agent-evaluations."
+  ],
+  "assigned_agent": "Repository Developer",
+  "workflow_stage": "IMPLEMENTATION",
+  "inputs": [
+    "docs/agent-evaluations/pilot-001-plan.md",
+    ".github/copilot-instructions.md",
+    ".github/skills/test-engineering/SKILL.md"
+  ],
+  "expected_outputs": [
+    "tests/test_calculator.py",
+    "tests/test_cli.py",
+    "docs/agent-evaluations/pilot-001-implementation.md"
+  ],
+  "required_evidence": [
+    "Exact pytest command and result",
+    "Changed-file list",
+    "Explicit production-code preservation statement"
+  ],
+  "approval_status": "PASS",
+  "gate_results": {
+    "plan_approval": "PASS",
+    "implementation_complete": "PASS",
+    "tests_pass": "PASS",
+    "review_approved": "PENDING",
+    "ci_verified": "PENDING",
+    "human_action_approval": "PENDING"
+  },
+  "risks": [
+    "Very large percentage operands use existing floating-point conversion."
+  ],
+  "blocking_findings": [],
+  "evidence": [
+    "docs/agent-evaluations/pilot-001-plan.md"
+  ]
+}

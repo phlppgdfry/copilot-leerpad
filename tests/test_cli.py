@@ -201,3 +201,31 @@ def test_cli_percentage_by_zero_has_one_user_facing_error():
         result.stderr
         == "calculation error: Cannot calculate a percentage of zero.\n"
     )
+
+
+@pytest.mark.parametrize(
+    ("first", "second", "expected"),
+    [
+        ("0", "100", 0),
+        ("25", "-100", -25),
+        ("1e3", "2e3", 50),
+    ],
+)
+def test_cli_percentage_handles_additional_numeric_boundaries(
+    first, second, expected
+):
+    result = run_cli("percentage", first, second)
+
+    assert result.returncode == 0
+    assert float(result.stdout) == pytest.approx(expected)
+    assert result.stderr == ""
+
+
+def test_cli_percentage_preserves_large_integer_operands():
+    result = run_cli("percentage", "1", "9007199254740993")
+
+    assert result.returncode == 0
+    assert float(result.stdout) == pytest.approx(
+        (1 / 9007199254740993) * 100
+    )
+    assert result.stderr == ""

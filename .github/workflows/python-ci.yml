@@ -37,6 +37,9 @@ jobs:
       - name: Run complete test suite
         run: python -m pytest -v
 
+      - name: Validate agent workflow contracts
+        run: python scripts/validate_agent_workflow.py
+
       - name: Build wheel and source distribution
         run: python -m build
 

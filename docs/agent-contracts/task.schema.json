@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lesson 12 Agent Task Contract",
+  "type": "object",
+  "required": [
+    "task_id",
+    "objective",
+    "scope",
+    "acceptance_criteria",
+    "assigned_agent",
+    "workflow_stage",
+    "inputs",
+    "expected_outputs",
+    "required_evidence",
+    "evidence",
+    "approval_status",
+    "gate_results",
+    "risks",
+    "blocking_findings"
+  ],
+  "properties": {
+    "task_id": {"type": "string", "minLength": 1},
+    "objective": {"type": "string", "minLength": 1},
+    "scope": {
+      "type": "object",
+      "required": ["in_scope", "out_of_scope"],
+      "properties": {
+        "in_scope": {"type": "array", "items": {"type": "string"}},
+        "out_of_scope": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "assigned_agent": {
+      "type": "string",
+      "enum": [
+        "Repository Researcher",
+        "Repository Developer",
+        "Repository Tester",
+        "Repository Reviewer"
+      ]
+    },
+    "workflow_stage": {
+      "type": "string",
+      "enum": ["RESEARCH", "IMPLEMENTATION", "TESTING", "REVIEW", "RELEASE"]
+    },
+    "inputs": {"type": "array", "items": {"type": "string"}},
+    "expected_outputs": {"type": "array", "items": {"type": "string"}},
+    "required_evidence": {"type": "array", "items": {"type": "string"}},
+    "approval_status": {
+      "type": "string",
+      "enum": ["PENDING", "PASS", "FAIL", "BLOCKED", "NOT_APPLICABLE"]
+    },
+    "gate_results": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "enum": ["PENDING", "PASS", "FAIL", "BLOCKED", "NOT_APPLICABLE"]
+      }
+    },
+    "risks": {"type": "array", "items": {"type": "string"}},
+    "blocking_findings": {"type": "array", "items": {"type": "string"}},
+    "evidence": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}
