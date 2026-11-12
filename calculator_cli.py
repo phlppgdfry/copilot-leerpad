@@ -60,6 +60,12 @@ def main(argv: list[str] | None = None) -> int:
             )
             return 1
         second_number = int(second_number)
+        if args.number1 == 0 and second_number < 0:
+            print(
+                "calculation error: zero to a negative power",
+                file=sys.stderr,
+            )
+            return 1
 
     try:
         result = operation(args.number1, second_number)
