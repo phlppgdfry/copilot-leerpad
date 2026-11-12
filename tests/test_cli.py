@@ -3,6 +3,8 @@ import sys
 
 import pytest
 
+from calculator_cli import main
+
 
 def run_cli(*arguments: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
@@ -117,6 +119,14 @@ def test_cli_help_succeeds():
     for operation in ("add", "subtract", "multiply", "divide", "power"):
         assert operation in result.stdout
     assert result.stderr == ""
+
+
+def test_main_returns_success_exit_code(capsys):
+    assert main(["add", "2", "3"]) == 0
+
+    captured = capsys.readouterr()
+    assert captured.out == "5\n"
+    assert captured.err == ""
 
 
 @pytest.mark.parametrize(
