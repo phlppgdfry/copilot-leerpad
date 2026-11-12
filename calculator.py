@@ -48,3 +48,9 @@ def percentage(value: int | float, total: int | float) -> float:
         raise ZeroDivisionError("Cannot calculate a percentage of zero.")
 
     return (value / total) * 100
+
+
+if __name__ == "__main__":
+    from calculator_cli import main
+
+    raise SystemExit(main())
