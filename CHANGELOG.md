@@ -13,7 +13,7 @@ Dit bestand volgt de conventies van [Keep a Changelog](https://keepachangelog.co
   - percentages berekenen;
   - getallen classificeren als positief, negatief of nul.
 - Een CLI in `calculator_cli.py` met de opdrachten `add`, `subtract`,
-  `multiply`, `divide` en `power`.
+  `multiply`, `divide`, `power` en `percentage`.
 - Gebruik als module met `python -m calculator`.
 - Een installeerbare `calculator-cli`-distributie met de console-opdracht
   `calculator-cli`.
@@ -41,8 +41,8 @@ Dit bestand volgt de conventies van [Keep a Changelog](https://keepachangelog.co
 
 ### Known limitations
 
-- De CLI ondersteunt alleen `add`, `subtract`, `multiply`, `divide` en `power`;
-  `percentage` en `classify_number` zijn alleen beschikbaar via de Python-API.
+- De CLI ondersteunt `add`, `subtract`, `multiply`, `divide`, `power` en
+  `percentage`; `classify_number` is alleen beschikbaar via de Python-API.
 - `power` accepteert via de CLI alleen gehele exponenten.
 - De CLI werkt met twee getallen per opdracht en heeft geen interactieve modus
   of geschiedenis.

@@ -21,3 +21,8 @@ htmlcov/
 
 # VS Code local settings
 .vscode/
+
+# Python build artifacts
+dist/
+build/
+*.egg-info/
