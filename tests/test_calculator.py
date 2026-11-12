@@ -167,3 +167,9 @@ def test_percentage_with_zero_total_raises_zero_division_error():
     """Verify that a zero total raises the expected exception."""
     with pytest.raises(ZeroDivisionError):
         percentage(10, 0)
+
+
+def test_percentage_with_zero_float_total_raises_zero_division_error():
+    """Verify that a floating-point zero total raises the expected exception."""
+    with pytest.raises(ZeroDivisionError):
+        percentage(10, 0.0)
