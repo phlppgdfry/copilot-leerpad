@@ -16,6 +16,14 @@ OPERATIONS = {
 }
 
 
+def parse_number(value: str) -> int | float:
+    """Parse integer operands exactly and other numeric values as floats."""
+    try:
+        return int(value)
+    except ValueError:
+        return float(value)
+
+
 def _suppress_default_calculator_logging() -> None:
     """Keep the CLI error output clear unless logging was configured."""
     calculator_logger = logging.getLogger("calculator")
@@ -32,8 +40,8 @@ def build_parser() -> argparse.ArgumentParser:
         description="Perform a calculation with two numbers."
     )
     parser.add_argument("operation", choices=OPERATIONS)
-    parser.add_argument("number1", type=float)
-    parser.add_argument("number2", type=float)
+    parser.add_argument("number1", type=parse_number)
+    parser.add_argument("number2", type=parse_number)
     return parser
 
 
@@ -45,7 +53,7 @@ def main(argv: list[str] | None = None) -> int:
     second_number = args.number2
 
     if operation is power:
-        if not second_number.is_integer():
+        if isinstance(second_number, float) and not second_number.is_integer():
             print(
                 "calculation error: power exponent must be an integer.",
                 file=sys.stderr,

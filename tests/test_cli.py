@@ -16,11 +16,11 @@ def run_cli(*arguments: str) -> subprocess.CompletedProcess[str]:
 @pytest.mark.parametrize(
     ("operation", "first", "second", "expected"),
     [
-        ("add", "2", "3", "5.0\n"),
-        ("subtract", "8", "3", "5.0\n"),
-        ("multiply", "4", "3", "12.0\n"),
+        ("add", "2", "3", "5\n"),
+        ("subtract", "8", "3", "5\n"),
+        ("multiply", "4", "3", "12\n"),
         ("divide", "12", "3", "4.0\n"),
-        ("power", "2", "3", "8.0\n"),
+        ("power", "2", "3", "8\n"),
     ],
 )
 def test_cli_operations_succeed(operation, first, second, expected):
@@ -36,6 +36,47 @@ def test_cli_supports_decimal_and_negative_values():
 
     assert result.returncode == 0
     assert float(result.stdout) == pytest.approx(-10)
+    assert result.stderr == ""
+
+
+def test_cli_preserves_large_integer_precision():
+    result = run_cli("add", "9007199254740992", "1")
+
+    assert result.returncode == 0
+    assert result.stdout == "9007199254740993\n"
+    assert result.stderr == ""
+
+
+def test_cli_preserves_negative_integer_operands():
+    result = run_cli("add", "-9007199254740992", "-1")
+
+    assert result.returncode == 0
+    assert result.stdout == "-9007199254740993\n"
+    assert result.stderr == ""
+
+
+@pytest.mark.parametrize(
+    ("first", "second", "expected"),
+    [
+        ("0.1", "0.2", 0.3),
+        ("1e3", "2.5e-1", 1000.25),
+    ],
+)
+def test_cli_parses_decimal_and_scientific_notation_as_float(
+    first, second, expected
+):
+    result = run_cli("add", first, second)
+
+    assert result.returncode == 0
+    assert float(result.stdout) == pytest.approx(expected)
+    assert result.stderr == ""
+
+
+def test_cli_preserves_large_integer_exponentiation():
+    result = run_cli("power", "9007199254740992", "2")
+
+    assert result.returncode == 0
+    assert result.stdout == "81129638414606681695789005144064\n"
     assert result.stderr == ""
 
 
