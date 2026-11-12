@@ -6,7 +6,7 @@ command-line-interface (CLI) voor berekeningen vanuit een terminal.
 
 ## Ondersteunde bewerkingen
 
-De CLI ondersteunt deze vijf bewerkingen:
+De CLI ondersteunt deze zes bewerkingen:
 
 | Bewerking | Voorbeeld | Resultaat |
 |---|---|---:|
@@ -15,9 +15,10 @@ De CLI ondersteunt deze vijf bewerkingen:
 | `multiply` | `multiply 4 3` | `12` |
 | `divide` | `divide 12 3` | `4.0` |
 | `power` | `power 2 3` | `8` |
+| `percentage` | `percentage 25 200` | `12.5` |
 
-De Python-API bevat daarnaast `percentage` en `classify_number`. Deze functies
-zijn niet als CLI-bewerking beschikbaar.
+De Python-API bevat daarnaast `classify_number`, die niet als CLI-bewerking
+beschikbaar is.
 
 ## Vereisten
 
@@ -156,6 +157,9 @@ python -m calculator divide 12 3
 
 python -m calculator power 2 3
 # stdout: 8.0
+
+python -m calculator percentage 25 200
+# stdout: 12.5
 ```
 
 Voorbeelden met negatieve waarden en decimalen:
@@ -207,6 +211,10 @@ python -m calculator add 2
 
 python -m calculator divide 10 0
 # stderr: calculation error: Cannot divide by zero.
+# exitcode: 1
+
+python -m calculator percentage 10 0
+# stderr: calculation error: Cannot calculate a percentage of zero.
 # exitcode: 1
 ```
 
@@ -262,8 +270,8 @@ copilot-leerpad/
 
 ## Bekende beperkingen
 
-- De CLI ondersteunt alleen `add`, `subtract`, `multiply`, `divide` en `power`.
-  `percentage` en `classify_number` zijn alleen beschikbaar via Python.
+- De CLI ondersteunt `add`, `subtract`, `multiply`, `divide`, `power` en
+  `percentage`. `classify_number` is alleen beschikbaar via Python.
 - `power` vereist een gehele exponent. Fractionele exponenten worden niet door
   de CLI uitgevoerd.
 - Resultaten gebruiken Python's normale representatie van `float`; de CLI

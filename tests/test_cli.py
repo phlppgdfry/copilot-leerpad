@@ -23,6 +23,7 @@ def run_cli(*arguments: str) -> subprocess.CompletedProcess[str]:
         ("multiply", "4", "3", "12\n"),
         ("divide", "12", "3", "4.0\n"),
         ("power", "2", "3", "8\n"),
+        ("percentage", "25", "200", "12.5\n"),
     ],
 )
 def test_cli_operations_succeed(operation, first, second, expected):
@@ -94,6 +95,8 @@ def test_cli_preserves_large_integer_exponentiation():
         ("divide", "1.5", "0.5", 3),
         ("power", "2.5", "2", 6.25),
         ("power", "2", "-3", 0.125),
+        ("percentage", "-25", "100", -25),
+        ("percentage", "12.5", "50", 25),
         ("add", "0", "7", 7),
         ("subtract", "0", "4", -4),
         ("multiply", "9", "0", 0),
@@ -116,7 +119,14 @@ def test_cli_help_succeeds():
 
     assert result.returncode == 0
     assert "usage:" in result.stdout.lower()
-    for operation in ("add", "subtract", "multiply", "divide", "power"):
+    for operation in (
+        "add",
+        "subtract",
+        "multiply",
+        "divide",
+        "power",
+        "percentage",
+    ):
         assert operation in result.stdout
     assert result.stderr == ""
 
@@ -156,6 +166,7 @@ def test_cli_rejects_invalid_usage(arguments):
         ("divide", "10", "0", "Cannot divide by zero."),
         ("divide", "0", "0", "Cannot divide by zero."),
         ("divide", "-10", "0", "Cannot divide by zero."),
+        ("percentage", "10", "0", "Cannot calculate a percentage of zero."),
         ("power", "0", "-1", "zero to a negative power"),
         ("power", "2", "0.5", "exponent must be an integer"),
     ],
@@ -179,3 +190,14 @@ def test_cli_division_by_zero_has_one_user_facing_error(first, second):
     assert result.returncode == 1
     assert result.stdout == ""
     assert result.stderr == "calculation error: Cannot divide by zero.\n"
+
+
+def test_cli_percentage_by_zero_has_one_user_facing_error():
+    result = run_cli("percentage", "10", "0")
+
+    assert result.returncode == 1
+    assert result.stdout == ""
+    assert (
+        result.stderr
+        == "calculation error: Cannot calculate a percentage of zero.\n"
+    )

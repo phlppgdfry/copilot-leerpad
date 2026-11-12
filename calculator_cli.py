@@ -4,7 +4,7 @@ import argparse
 import logging
 import sys
 
-from calculator import add, divide, multiply, power, subtract
+from calculator import add, divide, multiply, percentage, power, subtract
 
 
 OPERATIONS = {
@@ -13,6 +13,7 @@ OPERATIONS = {
     "multiply": multiply,
     "divide": divide,
     "power": power,
+    "percentage": percentage,
 }
 
 
