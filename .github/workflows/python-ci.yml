@@ -40,6 +40,9 @@ jobs:
       - name: Validate agent workflow contracts
         run: python scripts/validate_agent_workflow.py
 
+      - name: Validate offline MCP research fixture
+        run: python scripts/validate_mcp_research.py docs/agent-evaluations/lesson-13-simulated-report.json
+
       - name: Build wheel and source distribution
         run: python -m build
 

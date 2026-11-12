@@ -1,0 +1,27 @@
+{
+  "repository": "phlppgdfry/copilot-leerpad",
+  "issue": {
+    "number": 17
+  },
+  "pull_request": {
+    "number": 18
+  },
+  "no_write_evidence": {
+    "asserted": true,
+    "statement": "This fixture is offline and performs no write or mutation operation.",
+    "operations": [
+      {
+        "tool": "offline-fixture",
+        "operation": "read",
+        "read_only": true
+      }
+    ]
+  },
+  "results": [
+    {
+      "status": "SIMULATED",
+      "finding": "Illustrative report shape only; no live Issue or pull request claim is made.",
+      "source": "offline-fixture"
+    }
+  ]
+}
