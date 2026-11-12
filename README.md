@@ -1,33 +1,35 @@
 # Simple Calculator
 
-Een eenvoudige Python-calculator voor beginners. Het project gebruikt losse
-functies, zodat elke berekening onafhankelijk kan worden gebruikt en getest.
+Een eenvoudige Python-calculator voor beginners. Het project bevat losse
+functies die rechtstreeks vanuit Python kunnen worden gebruikt en een
+command-line-interface (CLI) voor berekeningen vanuit een terminal.
 
-## Functies
+## Ondersteunde bewerkingen
 
-De calculator ondersteunt:
+De CLI ondersteunt deze vijf bewerkingen:
 
-- optellen met `add`;
-- aftrekken met `subtract`;
-- vermenigvuldigen met `multiply`;
-- delen met `divide`.
-- machtsverheffen met `power`;
-- percentages berekenen met `percentage`.
+| Bewerking | Voorbeeld | Resultaat |
+|---|---|---:|
+| `add` | `add 2 3` | `5.0` |
+| `subtract` | `subtract 8 3` | `5.0` |
+| `multiply` | `multiply 4 3` | `12.0` |
+| `divide` | `divide 12 3` | `4.0` |
+| `power` | `power 2 3` | `8.0` |
 
-De calculator heeft nog geen command-line-interface. Je gebruikt de functies
-rechtstreeks vanuit Python-code.
+De Python-API bevat daarnaast `percentage` en `classify_number`. Deze functies
+zijn niet als CLI-bewerking beschikbaar.
 
 ## Vereisten
 
 - Python 3.11 of nieuwer
-- `pip`, de pakketbeheerder van Python
+- `pip`
 
-Python 3.11 of nieuwer is nodig voor de ondersteunde projectomgeving en type
-hints zoals `int | float`.
+Python 3.11 of nieuwer is nodig voor de type hints in de calculatorcode, zoals
+`int | float`. De productiecode gebruikt alleen de Python-standaardbibliotheek.
 
 ## Installatie
 
-Open een terminal en ga naar de projectmap:
+Ga in een terminal naar de projectmap:
 
 ```bash
 cd /pad/naar/copilot-leerpad
@@ -35,31 +37,21 @@ cd /pad/naar/copilot-leerpad
 
 Vervang `/pad/naar/copilot-leerpad` door het echte pad naar deze repository.
 
-### macOS/Linux
+### Virtuele omgeving: macOS en Linux
 
-Maak een virtuele omgeving aan:
+Maak een virtuele omgeving aan en activeer deze:
 
 ```bash
 python3 -m venv .venv
-```
-
-Activeer de virtuele omgeving:
-
-```bash
 source .venv/bin/activate
 ```
 
-### Windows
+Gebruik daarna `python` vanuit deze geactiveerde omgeving.
 
-Maak een virtuele omgeving aan:
+### Virtuele omgeving: Windows PowerShell
 
 ```powershell
 py -3 -m venv .venv
-```
-
-Activeer de virtuele omgeving in PowerShell:
-
-```powershell
 .venv\Scripts\Activate.ps1
 ```
 
@@ -69,88 +61,183 @@ Gebruik je de klassieke Windows-opdrachtprompt (`cmd.exe`), activeer dan met:
 .venv\Scripts\activate.bat
 ```
 
-## Dependencies installeren
+## Ontwikkelafhankelijkheden installeren
 
-Installeer de ontwikkelafhankelijkheden vanuit de geactiveerde virtuele
-omgeving:
+Installeer pytest en de vastgelegde ontwikkelafhankelijkheden:
 
 ```bash
 python -m pip install -r requirements-dev.txt
 ```
 
-De productiecode heeft geen externe dependencies. `requirements-dev.txt`
-bevat pytest en de pakketten die pytest nodig heeft om de tests uit te voeren.
+## Python-API gebruiken
 
-## Calculator gebruiken
-
-Importeer de functies uit `calculator.py`:
+De bestaande functies blijven beschikbaar vanuit `calculator.py`:
 
 ```python
 from calculator import add, divide, multiply, percentage, power, subtract
 
-add(2, 3)          # 5
-subtract(8, 3)     # 5
-multiply(4, 3)     # 12
-divide(12, 3)      # 4.0
-power(2, 3)        # 8
-percentage(25, 200)  # 12.5
+add(2, 3)             # 5
+subtract(8, 3)        # 5
+multiply(4, 3)        # 12
+divide(12, 3)         # 4.0
+power(2, 3)           # 8
+percentage(25, 200)   # 12.5
 ```
 
-De functies werken met gehele getallen en kommagetallen:
+De functies accepteren gehele getallen en kommagetallen:
 
 ```python
-add(2, 0.5)        # 2.5
-divide(5, 2.0)     # 2.5
+add(2, 0.5)           # 2.5
+divide(5, 2.0)        # 2.5
 percentage(12.5, 50)  # 25.0
 ```
 
-## Foutafhandeling
+## CLI gebruiken
 
-Delen door nul is niet toegestaan. `divide` en `percentage` geven in dat geval
-een `ZeroDivisionError`:
+Voer de calculator uit als Python-module:
 
-```python
-from calculator import divide
-
-divide(10, 0)  # raises ZeroDivisionError
-percentage(10, 0)  # raises ZeroDivisionError
+```bash
+python -m calculator <bewerking> <getal1> <getal2>
 ```
 
-De functies verwachten numerieke invoer. Invoercontrole voor andere types is
-geen onderdeel van dit eenvoudige project.
+De CLI accepteert gehele getallen, kommagetallen en negatieve waarden.
+Succesvolle resultaten worden naar stdout geschreven.
+
+### Voorbeelden
+
+```bash
+python -m calculator add 2 3
+# stdout: 5.0
+
+python -m calculator subtract 8 3
+# stdout: 5.0
+
+python -m calculator multiply 4 3
+# stdout: 12.0
+
+python -m calculator divide 12 3
+# stdout: 4.0
+
+python -m calculator power 2 3
+# stdout: 8.0
+```
+
+Voorbeelden met negatieve waarden en decimalen:
+
+```bash
+python -m calculator add -2.5 0.5
+# stdout: -2.0
+
+python -m calculator divide -12 2.5
+# stdout: -4.8
+
+python -m calculator power 2.5 2
+# stdout: 6.25
+```
+
+Een machtsbewerking gebruikt een gehele exponent. Een waarde zoals `0.5` als
+exponent wordt als ongeldige rekeninvoer afgewezen.
+
+### Help
+
+Toon de syntax en de beschikbare bewerkingen met:
+
+```bash
+python -m calculator --help
+```
+
+De helptekst wordt naar stdout geschreven en gebruikt exitcode `0`.
+
+## Foutafhandeling en exitcodes
+
+De CLI geeft geen Python-traceback voor verwachte invoerfouten.
+
+| Situatie | Stream | Exitcode |
+|---|---|---:|
+| Berekening geslaagd | resultaat naar stdout | `0` |
+| Ontbrekende of ongeldige argumenten | argparse-fout naar stderr | `2` |
+| Onbekende bewerking | argparse-fout naar stderr | `2` |
+| Niet-numerieke invoer | argparse-fout naar stderr | `2` |
+| Delen door nul | rekenfout naar stderr | `1` |
+| Niet-gehele exponent voor `power` | rekenfout naar stderr | `1` |
+| `power 0 -1` | rekenfout naar stderr | `1` |
+
+Voorbeelden:
+
+```bash
+python -m calculator add 2
+# stderr: usage: ...
+# exitcode: 2
+
+python -m calculator divide 10 0
+# stderr: calculation error: Cannot divide by zero.
+# exitcode: 1
+```
 
 ## Tests uitvoeren
 
-Voer de tests uit vanuit de projectmap, met de virtuele omgeving geactiveerd:
+Voer de volledige pytest-suite uit vanuit de projectmap:
 
 ```bash
 python -m pytest -v
 ```
 
-De tests staan in `tests/test_calculator.py` en controleren onder andere:
-
-- positieve en negatieve getallen;
-- nul;
-- gehele getallen en kommagetallen;
-- gemengde numerieke invoer;
-- floating-point-resultaten;
-- delen door nul;
-- machtsverheffen en percentages.
-
-Als je klaar bent, kun je de virtuele omgeving verlaten met:
+Voer alleen de Python-API-unit-tests uit:
 
 ```bash
-deactivate
+python -m pytest -v tests/test_calculator.py
 ```
+
+Voer alleen de CLI-integratietests uit:
+
+```bash
+python -m pytest -v tests/test_cli.py
+```
+
+De CLI-tests starten echte subprocessen met `sys.executable -m calculator`.
+Daarmee controleren ze niet alleen de berekening, maar ook exitcodes, stdout,
+stderr, argparse-fouten en helptekst.
+
+Voor een korte testuitvoer kan `-q` worden gebruikt:
+
+```bash
+python -m pytest -q
+```
+
+Een aparte coverage-plugin is niet opgenomen in `requirements-dev.txt`.
+De bovenstaande commando's voeren daarom de beschikbare unit- en
+integratietests uit; ze berekenen geen percentage broncode-dekking.
 
 ## Projectstructuur
 
 ```text
 copilot-leerpad/
-├── calculator.py              # Calculatorfuncties
+├── calculator.py              # Publieke Python-functies en module-entrypoint
+├── calculator_cli.py          # argparse CLI en foutafhandeling
 ├── tests/
-│   └── test_calculator.py     # Geautomatiseerde pytest-tests
-├── requirements-dev.txt       # Ontwikkelafhankelijkheden
+│   ├── test_calculator.py     # Tests voor de Python-functies
+│   └── test_cli.py            # Subprocess-integratietests voor de CLI
+├── requirements-dev.txt       # Vastgelegde pytest-ontwikkelafhankelijkheden
 ├── README.md                  # Projectdocumentatie
-└── .gitignore                 # Bestanden die Git moet negeren
+└── .gitignore                 # Bestanden die Git negeert
+```
+
+## Bekende beperkingen
+
+- De CLI ondersteunt alleen `add`, `subtract`, `multiply`, `divide` en `power`.
+  `percentage` en `classify_number` zijn alleen beschikbaar via Python.
+- `power` vereist een gehele exponent. Fractionele exponenten worden niet door
+  de CLI uitgevoerd.
+- Resultaten gebruiken Python's normale representatie van `float`; de CLI
+  rondt resultaten niet kunstmatig af.
+- De CLI is bedoeld voor twee getallen per opdracht en heeft geen interactieve
+  modus, geschiedenis of installatie als zelfstandig pakket.
+- `divide` en `percentage` geven een `ZeroDivisionError` bij een nul-deler of
+  nul-totaal wanneer ze rechtstreeks vanuit Python worden aangeroepen. De CLI
+  vertaalt de relevante rekenfouten naar een foutmelding en exitcode.
+
+Verlaat de virtuele omgeving wanneer je klaar bent:
+
+```bash
+deactivate
 ```
