@@ -10,11 +10,11 @@ De CLI ondersteunt deze vijf bewerkingen:
 
 | Bewerking | Voorbeeld | Resultaat |
 |---|---|---:|
-| `add` | `add 2 3` | `5.0` |
-| `subtract` | `subtract 8 3` | `5.0` |
-| `multiply` | `multiply 4 3` | `12.0` |
+| `add` | `add 2 3` | `5` |
+| `subtract` | `subtract 8 3` | `5` |
+| `multiply` | `multiply 4 3` | `12` |
 | `divide` | `divide 12 3` | `4.0` |
-| `power` | `power 2 3` | `8.0` |
+| `power` | `power 2 3` | `8` |
 
 De Python-API bevat daarnaast `percentage` en `classify_number`. Deze functies
 zijn niet als CLI-bewerking beschikbaar.
@@ -60,6 +60,42 @@ Gebruik je de klassieke Windows-opdrachtprompt (`cmd.exe`), activeer dan met:
 ```bat
 .venv\Scripts\activate.bat
 ```
+
+### Installeerbare distributie
+
+Installeer lokaal vanuit de projectmap:
+
+```bash
+python -m pip install .
+```
+
+Daarna is de console-opdracht beschikbaar:
+
+```bash
+calculator-cli add 2 3
+# stdout: 5
+```
+
+Je kunt ook eerst distributiebestanden bouwen:
+
+```bash
+python -m build
+python -m pip install dist/calculator_cli-1.0.0-py3-none-any.whl
+```
+
+Deze repository publiceert geen pakketten naar PyPI. De bestaande
+`python -m calculator`-aanroep en imports vanuit `calculator.py` blijven
+beschikbaar na installatie.
+
+## Release 1.0.0
+
+Deze release bevat de bestaande calculator-API, de CLI-bewerkingen `add`,
+`subtract`, `multiply`, `divide` en `power`, en installatie als
+`calculator-cli`-distributie. De functies `percentage` en `classify_number`
+blijven beschikbaar via de Python-API, maar zijn geen CLI-bewerkingen.
+
+Zie [CHANGELOG.md](CHANGELOG.md) voor de volledige release notes. Er wordt in
+deze release niets naar PyPI gepubliceerd.
 
 ## Ontwikkelafhankelijkheden installeren
 
@@ -214,10 +250,12 @@ integratietests uit; ze berekenen geen percentage broncode-dekking.
 copilot-leerpad/
 ├── calculator.py              # Publieke Python-functies en module-entrypoint
 ├── calculator_cli.py          # argparse CLI en foutafhandeling
+├── pyproject.toml             # PEP 517/621 packagingconfiguratie
+├── CHANGELOG.md               # Wijzigingen per versie
 ├── tests/
 │   ├── test_calculator.py     # Tests voor de Python-functies
 │   └── test_cli.py            # Subprocess-integratietests voor de CLI
-├── requirements-dev.txt       # Vastgelegde pytest-ontwikkelafhankelijkheden
+├── requirements-dev.txt       # Vastgelegde ontwikkelafhankelijkheden
 ├── README.md                  # Projectdocumentatie
 └── .gitignore                 # Bestanden die Git negeert
 ```
@@ -231,7 +269,7 @@ copilot-leerpad/
 - Resultaten gebruiken Python's normale representatie van `float`; de CLI
   rondt resultaten niet kunstmatig af.
 - De CLI is bedoeld voor twee getallen per opdracht en heeft geen interactieve
-  modus, geschiedenis of installatie als zelfstandig pakket.
+  modus of geschiedenis.
 - `divide` en `percentage` geven een `ZeroDivisionError` bij een nul-deler of
   nul-totaal wanneer ze rechtstreeks vanuit Python worden aangeroepen. De CLI
   vertaalt de relevante rekenfouten naar een foutmelding en exitcode.
