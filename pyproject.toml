@@ -15,3 +15,8 @@ calculator-cli = "calculator_cli:main"
 
 [tool.setuptools]
 py-modules = ["calculator", "calculator_cli"]
+
+[tool.pytest.ini_options]
+# Run the original calculator suite at the repository root.
+# The independent AI course has its own nested test workflow and dependencies.
+testpaths = ["tests"]
