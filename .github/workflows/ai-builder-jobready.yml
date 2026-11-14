@@ -1,0 +1,26 @@
+name: AI Builder Jobready course tests
+
+on:
+  push:
+    paths:
+      - 'learning-paths/ai-builder-jobready/**'
+      - '.github/workflows/ai-builder-jobready.yml'
+  pull_request:
+    paths:
+      - 'learning-paths/ai-builder-jobready/**'
+      - '.github/workflows/ai-builder-jobready.yml'
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: learning-paths/ai-builder-jobready/capstone/service_hub
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m pytest -q
